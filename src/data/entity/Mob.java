@@ -12,7 +12,7 @@ public abstract class Mob extends Entity {
 	protected float speed;
 
 	public Mob(int id, float x, float y, int width, int height, String textureName, float speed, Map map) {
-		super(id, x, y, width, height, textureName, map);
+		super(id, x, y, width, height, textureName, map, map.getGame());
 		this.speed = speed;
 	}
 

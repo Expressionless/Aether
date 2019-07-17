@@ -3,6 +3,7 @@ package data.states.gameState.world;
 import java.util.ArrayList;
 import java.util.Random;
 
+import data.Game;
 import data.entity.Entity;
 import data.entity.Mob;
 import data.entity.user.types.Woodcutter;
@@ -10,51 +11,76 @@ import data.helpers.BobRoss;
 
 public class Map {
 
-	public static ArrayList<Entity> entities;
+	private static ArrayList<Entity> entities;
 
-	public static final int CHUNK_SIZE = 20;
+	public static final int CHUNK_SIZE = 8;
 
 	private Chunk[][] chunks;
 
-	public Map() {
+	private Game game;
+
+	public Map(Game game) {
 		chunks = generateChunkData(CHUNK_SIZE, BobRoss.WIDTH, BobRoss.HEIGHT, this);
 		if (chunks.length == 0)
 			System.out.println("Failed to Generate Map!");
+		this.game = game;
+		Mob woodcutter = spawnMob("woodcutter",300,300);
 	}
 
-	public Map(Chunk[][] chunks) {
+	public Map(Chunk[][] chunks, Game game) {
 		this.chunks = chunks;
+		this.game = game;
+		Mob woodcutter = spawnMob("woodcutter",300,300);
 	}
 
-	public static Map generateMap(int chunkSize, int width, int height) {
+	public static Map generateMap(int chunkSize, int width, int height, Game game) {
 		System.out.println("Generating new map with: ");
 		System.out.println("ChunkSize: " + chunkSize);
 		System.out.println("Dimensions: " + width + "," + height);
 
 		entities = new ArrayList<Entity>();
 
-		Map m = new Map(new Chunk[chunkSize / width][chunkSize / height]);
+		Map m = new Map(new Chunk[chunkSize / width][chunkSize / height], game);
 		m.setChunks(generateChunkData(chunkSize, width, height, m));
 		return m;
 	}
 
 	public void tick() {
+		updateChunks();
+	}
+
+	public void render() {
+		renderChunks();
+		renderEntities();
+	}
+
+	public void updateEntities() {
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).entityTick();
+		}
+	}
+
+	public void updateChunks() {
 		for (int i = 0; i < chunks.length; i++) {
 			for (int j = 0; j < chunks[i].length; j++) {
 				chunks[i][j].tick();
 			}
 		}
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).entityTick();
+		}
 	}
 
-	public void render() {
+	public void renderEntities() {
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).render();
+		}
+	}
+
+	public void renderChunks() {
 		for (int i = 0; i < chunks.length; i++) {
 			for (int j = 0; j < chunks[i].length; j++) {
 				chunks[i][j].renderTerrain();
-			}
-		}
-		for (int i = 0; i < chunks.length; i++) {
-			for (int j = 0; j < chunks[i].length; j++) {
-				chunks[i][j].renderEntities();
 			}
 		}
 	}
@@ -80,14 +106,6 @@ public class Map {
 		return chunks;
 	}
 
-	public Chunk[][] getChunks() {
-		return chunks;
-	}
-
-	public void setChunks(Chunk[][] chunks) {
-		this.chunks = chunks;
-	}
-
 	public Mob spawnMob(String mob, float x, float y) {
 		int xPos, yPos;
 		Mob entity;
@@ -108,4 +126,27 @@ public class Map {
 		}
 	}
 
+	public Chunk[][] getChunks() {
+		return chunks;
+	}
+
+	public void setChunks(Chunk[][] chunks) {
+		this.chunks = chunks;
+	}
+
+	public static ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	public static void setEntities(ArrayList<Entity> entities) {
+		Map.entities = entities;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
 }

@@ -11,19 +11,23 @@ public class GameState extends State {
 
 	public GameState(Game game) {
 		super(game, "game");
-		
+		components.add(game.getUI());
+
 	}
 
 	public void init() {
 		components.add(new Neo(32, 32, game));
 	}
-	
+
 	@Override
 	public void tick() {
-		if (this == game.getCurrentState()) {
-			if(map!=null) map.tick();
+		if (this == game.getCurrentState() && game.getUI() != null) {
+			if (map != null) {
+				map.tick();
+				
+			}
 			else
-				map = Map.generateMap(Map.CHUNK_SIZE, BobRoss.WIDTH, BobRoss.HEIGHT);
+				map = Map.generateMap(Map.CHUNK_SIZE, BobRoss.WIDTH, BobRoss.HEIGHT, game);
 			for (int i = 0; i < components.size(); i++) {
 				components.get(i).tick();
 			}
@@ -36,7 +40,9 @@ public class GameState extends State {
 			if (map != null)
 				map.render();
 			for (int i = 0; i < components.size(); i++) {
-				components.get(i).render();
+				if(components.get(i) != null) {
+					components.get(i).render();
+				}
 			}
 		}
 	}

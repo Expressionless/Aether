@@ -17,14 +17,14 @@ public abstract class Button extends Component {
 	public abstract void tick();
 
 	public Button(float x, float y, float width, float height, String textureName, String text, Game game) {
-		super(x-width/2, y-height/2, width, height, game);
+		super(x-width/2, y-height/2, width, height, "button", game);
 		this.texture = BobRoss.quickLoad(textureName);
 		this.text = text;
 	}
 
 	public boolean clicked(int button) {
-		boolean isXBounds = Math.abs(Mouse.getX() - (getX() + getWidth() / 2)) < getWidth() / 2;
-		boolean isYBounds = Math.abs((BobRoss.HEIGHT - Mouse.getY()) - (getY() + getHeight() / 2)) < getHeight() / 2;
+		boolean isXBounds = Math.abs(Mouse.getX() - (pos.getX() + getWidth() / 2)) < getWidth() / 2;
+		boolean isYBounds = Math.abs((BobRoss.HEIGHT - Mouse.getY()) - (pos.getY() + getHeight() / 2)) < getHeight() / 2;
 		if (isXBounds && isYBounds) {
 			while (Mouse.next()){
 			    if (Mouse.getEventButtonState()) {

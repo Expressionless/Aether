@@ -1,5 +1,6 @@
 package data;
 
+import data.helpers.BobRoss;
 import data.states.GameState;
 import data.states.MenuState;
 import data.states.State;
@@ -11,7 +12,12 @@ public class Game {
 	private State currentState;
 	private State menuState, gameState;
 
+	private UI ui = null;
+
 	public Game(String s) {
+		while (ui == null) {
+			ui = new UI(0, 0, BobRoss.WIDTH, BobRoss.HEIGHT, this);
+		}
 		currentStateString = s;
 		menuState = new MenuState(this);
 		gameState = new GameState(this);
@@ -32,10 +38,11 @@ public class Game {
 		}
 		System.out.println("Changed State to " + currentState.getName());
 	}
+
 	public void setCurrentState(State state) {
 		currentState = state;
 		System.out.println("Changed State to " + currentState.getName());
-		
+
 	}
 
 	public void tick() {
@@ -48,12 +55,19 @@ public class Game {
 			currentState.render();
 	}
 
-
 	public State getGameState() {
 		return gameState;
 	}
 
 	public void setGameState(State gameState) {
 		this.gameState = gameState;
+	}
+
+	public UI getUI() {
+		return ui;
+	}
+
+	public void setUI(UI ui) {
+		this.ui = ui;
 	}
 }

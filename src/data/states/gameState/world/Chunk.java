@@ -14,8 +14,6 @@ import data.tile.TileGrid;
 public class Chunk {
 
 	private float x, y;
-
-	private int id = 0;
 	
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private ArrayList<Tree> trees = new ArrayList<Tree>();
@@ -39,11 +37,9 @@ public class Chunk {
 			int xPos = r.nextInt(CHUNK_SIZE);
 			int yPos = r.nextInt(CHUNK_SIZE);
 			Entity tree = new Tree(x + xPos * BobRoss.TILE_WIDTH, y + yPos * BobRoss.TILE_HEIGHT, map);
-			entities.add(tree);
+			Map.getEntities().add(tree);
 			trees.add((Tree) tree);
 		}
-		Mob villager = map.spawnMob("woodcutter", 20, 20);
-		entities.add(villager);
 	}
 
 	public ArrayList<Entity> getEntities() {
@@ -56,9 +52,6 @@ public class Chunk {
 
 	public void tick() {
 		terrain.tick();
-		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).tick();
-		}
 	}
 
 	public void renderTerrain() {

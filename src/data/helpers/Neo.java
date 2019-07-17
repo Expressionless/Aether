@@ -22,7 +22,7 @@ public class Neo extends Component {
 	}
 
 	public Neo(float x, float y, Game game) {
-		super(x, y, 1, 1, game);
+		super(x, y, 1, 1, "mouse",game);
 		pos = new Point(x, y);
 	}
 

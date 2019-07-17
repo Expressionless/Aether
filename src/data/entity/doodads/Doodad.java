@@ -11,7 +11,7 @@ public abstract class Doodad extends Entity {
 	protected DoodadType type;
 	
 	public Doodad(float x, float y, int width, int height, DoodadType type, Map map) {
-		super(0, x, y, width, height, type.textureName, map);
+		super(0, x, y, width, height, type.textureName, map, map.getGame());
 		pos = super.getPos();
 	}
 

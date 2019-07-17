@@ -2,6 +2,7 @@ package data.entity;
 
 import org.newdawn.slick.opengl.Texture;
 
+import data.Game;
 import data.helpers.BobRoss;
 import data.states.gameState.world.Map;
 import data.util.Point;
@@ -16,10 +17,11 @@ public abstract class Entity {
 	protected int[] chunkCoord = new int[2];
 
 	protected Map map;
-
+	protected Game game;
+	
 	// private Tile initTile;
 
-	public Entity(int id, float x, float y, int width, int height, String textureName, Map map) {
+	public Entity(int id, float x, float y, int width, int height, String textureName, Map map, Game game) {
 		// this.initTile = initTile;
 		this.width = width;
 		this.height = height;
@@ -34,7 +36,7 @@ public abstract class Entity {
 		chunkCoord[1] = chunkY;
 	}
 
-	public abstract void tick();
+	protected abstract void tick();
 
 	public void entityTick() {
 		if (first)

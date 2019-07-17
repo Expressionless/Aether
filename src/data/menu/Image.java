@@ -13,7 +13,7 @@ public class Image extends Component {
 	private int width, height;
 	
 	public Image(float x, float y, int width, int height, String textureName, Game game) {
-		super(x, y, width, height, game);
+		super(x, y, width, height, "image", game);
 		tex = BobRoss.quickLoad(textureName);
 		pos = new Point(x, y);
 		this.width = width;
