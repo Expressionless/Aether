@@ -1,11 +1,8 @@
 package data.states;
 
-import org.newdawn.slick.Color;
-
 import data.Game;
 import data.helpers.BobRoss;
 import data.states.gameState.world.Map;
-import data.util.Point;
 
 public class GameState extends State {
 

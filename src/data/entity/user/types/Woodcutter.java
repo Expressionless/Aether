@@ -18,10 +18,10 @@ public class Woodcutter extends Villager {
 
 	ArrayList<Text> UIText;
 
-	String[] info = {};//{ "Position: ", "Target Tree: " };
-	
+	String[] info = {};// { "Position: ", "Target Tree: " };
+
 	private Doodad target = null;
-	
+
 	public Woodcutter(int id, float x, float y, Map map) {
 		super(id, x, y, VillagerType.Woodcutter.width, VillagerType.Woodcutter.height,
 				VillagerType.Woodcutter.textureName, VillagerType.Woodcutter.speed, map);
@@ -30,7 +30,7 @@ public class Woodcutter extends Villager {
 	}
 
 	public void updateInfo() {
-		//info[0] = "Position: (" + pos.getX() + "," + pos.getY() + ")";
+		// info[0] = "Position: (" + pos.getX() + "," + pos.getY() + ")";
 		for (int i = 0; i < UIText.size(); i++) {
 			UIText.get(i).setPos(new Point(32, 32 + i * 64));
 			UIText.get(i).setText(info[i]);
@@ -41,28 +41,33 @@ public class Woodcutter extends Villager {
 	public void manageState() {
 		switch (state) {
 		case "idle":
-			
+
 			break;
 		case "work":
 			work();
 			break;
 		case "chopping":
+
 			break;
 		}
 	}
-	
+
 	public void work() {
 		updateInfo();
 		target = findClosestTree();
-		if(Point.findDistanceTo(target.getPos())>32) {
+		if (Point.findDistanceTo(target.getPos()) > 32.0) {
 			moveTo(target.getPos());
-		} else state = "chopping";
+		} else
+			moveTo(getPos());
 	}
-	
+
 	@Override
 	public void render() {
 		BobRoss.drawQuadTex(texture, pos.getX(), pos.getY(), width, height);
-		if(target != null) BobRoss.drawText("TARGET", target.getPos().getX(), target.getPos().getY());
+		if (target != null) {
+			double distance = Point.findDistanceTo(target.getPos());
+			BobRoss.drawText(Double.toString(distance), target.getPos().getX(), target.getPos().getY());
+		}
 	}
 
 	public Tree findClosestTree() {

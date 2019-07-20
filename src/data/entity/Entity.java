@@ -16,6 +16,8 @@ public abstract class Entity {
 	protected Point pos;
 	protected int[] chunkCoord = new int[2];
 
+	protected long[] alarm = new long[10];
+	
 	protected Map map;
 	protected Game game;
 
@@ -36,10 +38,20 @@ public abstract class Entity {
 
 	protected abstract void tick();
 
+	public void updateAlarms() {
+		for(int i = 0; i < 10; i++) {
+			if(alarm[i] > 0) {
+				alarm[i] -= 1;
+				System.out.println(alarm[i]);
+			} else if (alarm[i] == 0) alarm[i] = -1;
+		}
+	}
+	
 	public void entityTick() {
 		if (first)
 			first = false;
 		else {
+			updateAlarms();
 			tick();
 		}
 
