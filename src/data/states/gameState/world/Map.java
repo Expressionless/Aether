@@ -6,6 +6,7 @@ import java.util.Random;
 import data.Game;
 import data.entity.Entity;
 import data.entity.Mob;
+import data.entity.hostile.Zombie;
 import data.entity.user.types.Woodcutter;
 import data.helpers.BobRoss;
 
@@ -24,13 +25,12 @@ public class Map {
 		if (chunks.length == 0)
 			System.out.println("Failed to Generate Map!");
 		this.game = game;
-		Mob woodcutter = spawnMob("woodcutter",300,300);
 	}
 
 	public Map(Chunk[][] chunks, Game game) {
 		this.chunks = chunks;
 		this.game = game;
-		Mob woodcutter = spawnMob("woodcutter",300,300);
+		spawnMob("woodcutter",32,32);
 	}
 
 	public static Map generateMap(int chunkSize, int width, int height, Game game) {
@@ -107,21 +107,19 @@ public class Map {
 	}
 
 	public Mob spawnMob(String mob, float x, float y) {
-		int xPos, yPos;
 		Mob entity;
-		Random r = new Random();
-		xPos = r.nextInt(CHUNK_SIZE);
-		yPos = r.nextInt(CHUNK_SIZE);
+		
 		switch (mob.toUpperCase()) {
 		case "WOODCUTTER":
-			entity = new Woodcutter(0, x + xPos * BobRoss.TILE_WIDTH, y + yPos * BobRoss.TILE_HEIGHT, this);
+			entity = new Woodcutter(0, x, y, this);
 			entities.add(entity);
 			return entity;
 		case "ZOMBIE":
-			entity = new Woodcutter(0, x + xPos * BobRoss.TILE_WIDTH, y + yPos * BobRoss.TILE_HEIGHT, this);
+			entity = new Zombie(0, x, y, this);
 			entities.add(entity);
 			return entity;
 		default:
+			System.out.println("Failed to spawn mob at " + x + ", " + y + "!");
 			return null;
 		}
 	}

@@ -11,11 +11,12 @@ public class GameState extends State {
 
 	public GameState(Game game) {
 		super(game, "game");
-		components.add(game.getUI());
+		init();
 
 	}
 
 	public void init() {
+		components.add(game.getUI());
 		components.add(new Neo(32, 32, game));
 	}
 
@@ -24,7 +25,6 @@ public class GameState extends State {
 		if (this == game.getCurrentState() && game.getUI() != null) {
 			if (map != null) {
 				map.tick();
-				
 			}
 			else
 				map = Map.generateMap(Map.CHUNK_SIZE, BobRoss.WIDTH, BobRoss.HEIGHT, game);
