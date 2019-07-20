@@ -29,8 +29,8 @@ public abstract class Mob extends Entity {
 
 	public void moveTo(Point p2) {
 		Point p1 = getPos();
-		float disX = p1.getX() - p2.getX();
-		float disY = p1.getY() - p2.getY();
+		float disX = p2.getX() - p1.getX();
+		float disY = p2.getY() - p1.getY();
 		float distance = (float) Math.pow(Math.pow(disX, 2) + Math.pow(disY, 2), 0.5);
 		float arcsin = disY / distance;
 		float arccos = disX / distance;

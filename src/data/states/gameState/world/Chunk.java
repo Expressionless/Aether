@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import data.entity.Entity;
-import data.entity.Mob;
 import data.entity.doodads.Tree;
 import data.helpers.BobRoss;
 import data.tile.TileGrid;
@@ -32,12 +31,12 @@ public class Chunk {
 			}
 		}
 		terrain = new TileGrid(x, y, CHUNK_SIZE, CHUNK_SIZE, terrainData);
-		for (int i = 0; i < CHUNK_SIZE / 2; i++) {
+		for (int i = 0; i < 6; i++) {
 			Random r = new Random();
 			int xPos = r.nextInt(CHUNK_SIZE);
 			int yPos = r.nextInt(CHUNK_SIZE);
 			Entity tree = new Tree(x + xPos * BobRoss.TILE_WIDTH, y + yPos * BobRoss.TILE_HEIGHT, map);
-			Map.getEntities().add(tree);
+			parentMap.getEntities().add(tree);
 			trees.add((Tree) tree);
 		}
 	}
@@ -56,12 +55,12 @@ public class Chunk {
 
 	public void renderTerrain() {
 		terrain.render();
-	}
-	
-	public void renderEntities() {
-		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).render();
-		}
+		int chunkX = (int) Math.ceil((double) x / (double) (Map.CHUNK_SIZE * BobRoss.TILE_WIDTH));
+		int chunkY = (int) Math.ceil((double) y / (double) (Map.CHUNK_SIZE * BobRoss.TILE_HEIGHT));
+		int[] chunkCoord = new int[2];
+		chunkCoord[0] = chunkX;
+		chunkCoord[1] = chunkY;
+		BobRoss.drawText(chunkCoord[0]+" " + chunkCoord[1], x+16, y+16);
 	}
 
 	public float getX() {

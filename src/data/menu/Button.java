@@ -9,7 +9,7 @@ import data.helpers.BobRoss;
 
 public abstract class Button extends Component {
 
-	public final int LEFT_BUTTON = 0, MIDDLE_BUTTON = 2, RIGHT_BUTTON = 1;
+	public static final int LEFT_BUTTON = 0, MIDDLE_BUTTON = 2, RIGHT_BUTTON = 1;
 	
 	private Texture texture;
 	private String text;
@@ -28,12 +28,12 @@ public abstract class Button extends Component {
 		if (isXBounds && isYBounds) {
 			while (Mouse.next()){
 			    if (Mouse.getEventButtonState()) {
-			        if (Mouse.getEventButton() == 0) {
+			        if (Mouse.getEventButton() == LEFT_BUTTON) {
 			            System.out.println("Left button pressed");
 			        }
 		            return false;
 			    }else {
-			        if (Mouse.getEventButton() == 0) {
+			        if (Mouse.getEventButton() == LEFT_BUTTON) {
 			            System.out.println("Left button released");
 			            return true;
 			        }

@@ -1,6 +1,7 @@
 package data;
 
 import data.helpers.BobRoss;
+import data.helpers.Neo;
 import data.states.GameState;
 import data.states.MenuState;
 import data.states.State;
@@ -9,14 +10,19 @@ public class Game {
 
 	private String currentStateString;
 
+	
 	private State currentState;
 	private State menuState, gameState;
 
 	private UI ui = null;
+	private Neo mouse = null;
 
 	public Game(String s) {
 		while (ui == null) {
 			ui = new UI(0, 0, BobRoss.WIDTH, BobRoss.HEIGHT, this);
+		}
+		while(mouse == null) {
+			mouse = new Neo(32,32,this);
 		}
 		currentStateString = s;
 		menuState = new MenuState(this);
@@ -69,5 +75,9 @@ public class Game {
 
 	public void setUI(UI ui) {
 		this.ui = ui;
+	}
+
+	public Neo getMouse() {
+		return mouse;
 	}
 }

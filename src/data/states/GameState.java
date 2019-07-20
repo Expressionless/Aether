@@ -1,9 +1,11 @@
 package data.states;
 
+import org.newdawn.slick.Color;
+
 import data.Game;
 import data.helpers.BobRoss;
-import data.helpers.Neo;
 import data.states.gameState.world.Map;
+import data.util.Point;
 
 public class GameState extends State {
 
@@ -17,7 +19,7 @@ public class GameState extends State {
 
 	public void init() {
 		components.add(game.getUI());
-		components.add(new Neo(32, 32, game));
+		components.add(game.getMouse());
 	}
 
 	@Override
@@ -25,9 +27,9 @@ public class GameState extends State {
 		if (this == game.getCurrentState() && game.getUI() != null) {
 			if (map != null) {
 				map.tick();
-			}
-			else
+			} else {
 				map = Map.generateMap(Map.CHUNK_SIZE, BobRoss.WIDTH, BobRoss.HEIGHT, game);
+			}
 			for (int i = 0; i < components.size(); i++) {
 				components.get(i).tick();
 			}
@@ -40,7 +42,7 @@ public class GameState extends State {
 			if (map != null)
 				map.render();
 			for (int i = 0; i < components.size(); i++) {
-				if(components.get(i) != null) {
+				if (components.get(i) != null) {
 					components.get(i).render();
 				}
 			}

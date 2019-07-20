@@ -18,15 +18,13 @@ public abstract class Entity {
 
 	protected Map map;
 	protected Game game;
-	
-	// private Tile initTile;
 
 	public Entity(int id, float x, float y, int width, int height, String textureName, Map map, Game game) {
-		// this.initTile = initTile;
+		this.game = game;
 		this.width = width;
 		this.height = height;
 		pos = new Point(x, y);
-		this.texture = BobRoss.quickLoad(textureName);
+		if(textureName != null) this.texture = BobRoss.quickLoad(textureName);
 		this.map = map;
 
 		// Init Chunk code

@@ -50,7 +50,7 @@ public class Point {
 		float dot = v3.getPoint("end").getX(); //Dotted with (1, 0)
 		double mag = v3.getLength();
 		
-		return Math.acos(dot / mag); // Angle between 2 vectors
+		return Math.acos(dot / mag)*180/Math.PI; // Angle between 2 vectors
 	}
 
 	public static double getRatio(String ratio, Point p1, Point p2) {
