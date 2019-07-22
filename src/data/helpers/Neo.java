@@ -45,17 +45,17 @@ public class Neo extends Component {
 		}
 	}
 
-	public boolean clicked(int button) {
+	public boolean clicked(int button, String state) {
 		while (Mouse.next()) {
 			if (Mouse.getEventButtonState()) {
-				if (Mouse.getEventButton() == 0) {
-					System.out.println("Left button pressed");
+				if (Mouse.getEventButton() == button && state == "pressed") {
+					System.out.println("registered press");
 					return true;
 				}
 				return false;
 			} else {
-				if (Mouse.getEventButton() == 0) {
-					System.out.println("Left button released");
+				if (Mouse.getEventButton() == button && state == "released") {
+					System.out.println("registered release");
 					return true;
 				}
 				return false;

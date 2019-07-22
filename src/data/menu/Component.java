@@ -20,6 +20,8 @@ public abstract class Component {
 		this.height = height;
 		this.game = game;
 
+		game.getObjects().add(this);
+		
 		this.type = type;
 
 	}

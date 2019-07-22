@@ -14,5 +14,9 @@ public abstract class Doodad extends Entity {
 		super(0, x, y, width, height, type.textureName, map, map.getGame());
 		pos = super.getPos();
 	}
+	
+	public void tick() {
+		
+	}
 
 }

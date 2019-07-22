@@ -1,7 +1,7 @@
 package data.enums;
 
 public enum DoodadType {
-	Tree("doodad/tree64", 64, 64, true);
+	Item("doodad/missingtex", 24, 24, false), Tree("doodad/tree64", 64, 64, true);
 	//Speed: Tiles/Second
 	public String textureName;
 	public int width, height;

@@ -39,16 +39,6 @@ public class Point {
 
 		return Math.pow(dX + dY, 0.5);
 	}
-
-	public static double findDistanceTo(Point point1) {
-		double[] p1 = { (double) point1.getX(), (double) point1.getY() };
-
-		double dX = Math.pow(p1[0], 2);
-		double dY = Math.pow(p1[1], 2);
-
-		return Math.pow(dX + dY, 0.5);
-	}
-
 	public static double getPointDirection(Point p1, Point p2) {
 		Vector v1 = new Vector(p1);
 		Vector v2 = new Vector(p2);

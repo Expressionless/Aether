@@ -13,7 +13,8 @@ public class Zombie extends Mob {
 	}
 
 	@Override
-	public void tick() {
+	public void manageState() {
+		// TODO Auto-generated method stub
 		
 	}
 

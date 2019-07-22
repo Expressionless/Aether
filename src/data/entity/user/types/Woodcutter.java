@@ -2,7 +2,8 @@ package data.entity.user.types;
 
 import java.util.ArrayList;
 
-import data.entity.doodads.Doodad;
+import data.entity.Entity;
+import data.entity.doodads.Item;
 import data.entity.doodads.Tree;
 import data.entity.user.Villager;
 import data.enums.VillagerType;
@@ -20,7 +21,7 @@ public class Woodcutter extends Villager {
 
 	String[] info = {};// { "Position: ", "Target Tree: " };
 
-	private Doodad target = null;
+	private Entity target = null;
 
 	public Woodcutter(int id, float x, float y, Map map) {
 		super(id, x, y, VillagerType.Woodcutter.width, VillagerType.Woodcutter.height,
@@ -29,47 +30,52 @@ public class Woodcutter extends Villager {
 		UIText = new ArrayList<Text>();
 	}
 
-	public void updateInfo() {
-		// info[0] = "Position: (" + pos.getX() + "," + pos.getY() + ")";
-		for (int i = 0; i < UIText.size(); i++) {
-			UIText.get(i).setPos(new Point(32, 32 + i * 64));
-			UIText.get(i).setText(info[i]);
-		}
-	}
-
 	@Override
-	public void manageState() {
-		switch (state) {
-		case "idle":
+	public void manageState() { //Manage the Woodcutters State
+		switch (state.toUpperCase()) {
+		case "IDLE":
 
 			break;
-		case "work":
+		case "WORK":
 			work();
 			break;
-		case "chopping":
+		case "CHOPPING":
+
+			break;
+		case "COLLECTING":
+
+			if (map.getItems().size() > 0) {
+				target = findClosestItem();
+				if (pickup((Item) target) == ERR_NOT_IN_RANGE) {
+					moveTo(target.getPos());
+				}
+			}
 
 			break;
 		}
 	}
 
 	public void work() {
-		updateInfo();
-		target = findClosestTree();
-		if (Point.findDistanceTo(target.getPos()) > 32.0) {
-			moveTo(target.getPos());
-		} else
-			moveTo(getPos());
+		if (map.getItems().size() == 0) {
+			target = findClosestTree();
+			if (harvest(target) == ERR_NOT_IN_RANGE) {
+				moveTo(target.getPos());
+			}
+		} else {
+			state = "collecting";
+		}
 	}
 
 	@Override
 	public void render() {
 		BobRoss.drawQuadTex(texture, pos.getX(), pos.getY(), width, height);
 		if (target != null) {
-			double distance = Point.findDistanceTo(target.getPos());
+			double distance = Point.findDistanceTo(getPos(), target.getPos());
 			BobRoss.drawText(Double.toString(distance), target.getPos().getX(), target.getPos().getY());
 		}
 	}
 
+	// Tree Find Code
 	public Tree findClosestTree() {
 		int[] chunkCoord = getChunkCoord();
 		ArrayList<Tree> trees;
@@ -91,5 +97,24 @@ public class Woodcutter extends Villager {
 			return closestTree;
 		}
 		return null;
+	}
+
+	// Item Find Code
+	public Item findClosestItem() {
+		Item closestItem = null;
+		if (map != null) {
+			ArrayList<Item> items = map.getItems();
+			closestItem = items.get(0);
+			for (int i = 0; i < items.size(); i++) {
+				Point closestPos = closestItem.getPos();
+				Point nextPos = items.get(i).getPos();
+				double currentDistance = Point.findDistanceTo(getPos(), closestPos);
+				double newDistance = Point.findDistanceTo(getPos(), nextPos);
+				if (newDistance < currentDistance) {
+					closestItem = items.get(i);
+				}
+			}
+		}
+		return closestItem;
 	}
 }

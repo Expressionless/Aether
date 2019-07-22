@@ -22,6 +22,7 @@ public abstract class Entity {
 	protected Game game;
 
 	public Entity(int id, float x, float y, int width, int height, String textureName, Map map, Game game) {
+		game.getObjects().add(this);
 		this.game = game;
 		this.width = width;
 		this.height = height;

@@ -39,6 +39,8 @@ public class Chunk {
 			parentMap.getEntities().add(tree);
 			trees.add((Tree) tree);
 		}
+		
+		parentMap.getGame().getObjects().add(this);
 	}
 
 	public ArrayList<Entity> getEntities() {

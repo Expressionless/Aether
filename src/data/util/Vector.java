@@ -14,7 +14,7 @@ public class Vector {
 	public Vector(Point p1) {
 		start = new Point(0, 0);
 		end = p1;
-		length = Point.findDistanceTo(p1);
+		length = Point.findDistanceTo(start, p1);
 	}
 
 	public static Vector subtract(Vector v1, Vector v2) {
